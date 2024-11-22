@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Recent Posts</h1>
     {% comment %} Here is where the query happens {% endcomment %}
-    {% for post in posts %}
+    {% for post in post_list %}
         <div class="post">
             <h2>
                 <a href="{% url 'blog_detail' post.pk %}"> {{ post }}</a>

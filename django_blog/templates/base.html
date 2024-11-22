@@ -6,6 +6,28 @@
     <link type="text/css" rel="stylesheet" href="{% static 'django_blog.css' %}"
   </head>
   <body>
+    <div id="header">
+      <ul id="control-bar">
+          {% if user.is_authenticated %}
+              {% if user.is_stafe %}
+                  <li>
+                      <a href="{% url 'admin.index' %}">admin</a>
+                  </li>
+              {% endif %}
+              <li>
+                  <form id="frm_logout" method="POST" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <a href="javascript:$('#frm_logout').submit();">logout</a>
+                  </form>
+              </li>
+          {% else %}
+          <li>
+              <a href="{% url 'login' %}">login</a>
+          </li>
+          {% endif %}
+      </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div id="container">
       <div id="content">
       {% block content %}
