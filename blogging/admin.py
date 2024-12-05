@@ -2,7 +2,6 @@ from django.contrib import admin
 from blogging.models import Post, Category
 
 
-
 """
 InlineModelAdmin: represents Categories on the Post Admin Page
 
@@ -12,13 +11,16 @@ the many-to-many relation. This model is automatically created
 by Django when you define a many-to-many field.
 """
 
+
 class CategoryInline(admin.TabularInline):
     model = Category.posts.through
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     inlines = [CategoryInline]
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    exclude = ['posts']
+    exclude = ["posts"]
