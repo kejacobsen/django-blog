@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.templatetags.tz import utc
 from django.test import TestCase
 from django.urls import reverse
@@ -5,6 +7,9 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
+
+from allauth.socialaccount.models import SocialApp
+from django.contrib.sites.models import Site
 
 
 from blogging.models import Post, Category
@@ -38,6 +43,19 @@ class FrontEndTestCase(TestCase):
     def setUp(self):
         self.now = timezone.now()
         self.timedelta = datetime.timedelta(15)
+
+        # Create a dummy SocialApp object
+        self.social_app = SocialApp.objects.create(
+            provider="github",
+            name="Test GitHub App",
+            client_id="test_client_id",
+            secret="test_secret",
+        )
+
+        # Ensure a Site instance exists, and assign it to the SocialApp
+        site = Site.objects.get(id=1)
+        self.social_app.sites.set([site])
+
         author = User.objects.get(pk=1)
         print(f"Author retrieved: {author}")
         for count in range(1, 11):
