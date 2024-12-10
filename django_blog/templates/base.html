@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 {% load static %}
 <html>
@@ -9,6 +10,7 @@
     <div id="header">
       <ul id="control-bar">
           {% if user.is_authenticated %}
+              <li>Hello {{ user.username }} </li>
               {% if user.is_stafe %}
                   <li>
                       <a href="{% url 'admin.index' %}">admin</a>
@@ -22,7 +24,13 @@
               </li>
           {% else %}
           <li>
-              <a href="{% url 'login' %}">login</a>
+              <a href="{% url 'account_login' %}">login</a>
+          </li>
+          <!-- GitHub Login Button -->
+          <li>
+              <a href="{% provider_login_url 'github' %}" class="github-login">
+                  <img src="https://github.com/favicon.ico" alt="GitHub Login"> Login with GitHub
+              </a>
           </li>
           {% endif %}
       </ul>
